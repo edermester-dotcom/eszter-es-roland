@@ -1,0 +1,1 @@
+function start(){alert("A következő jelenet itt fog kezdődni.");}
