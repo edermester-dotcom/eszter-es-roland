@@ -1,1 +1,136 @@
-body{margin:0;background:#0d0d0d;color:#d4af37;font-family:Georgia,serif;overflow:hidden}.center{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}#stars{position:fixed;inset:0;background-image:radial-gradient(#d4af37 1px,transparent 1px);background-size:80px 80px;opacity:.15;animation:m 30s linear infinite}.key{font-size:64px}@keyframes m{from{transform:translateY(0)}to{transform:translateY(80px)}}button{padding:12px 20px}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+}
+
+body{
+    background:#090909;
+    color:#d4af37;
+    font-family:'Cormorant Garamond',serif;
+    overflow:hidden;
+}
+
+.background{
+    position:fixed;
+    inset:0;
+    background:
+        radial-gradient(circle at center,#222 0%,#111 45%,#090909 100%);
+}
+
+.background::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+        radial-gradient(#d4af37 1px, transparent 1px);
+    background-size:70px 70px;
+    opacity:.15;
+    animation:stars 40s linear infinite;
+}
+
+@keyframes stars{
+    from{
+        transform:translateY(0);
+    }
+    to{
+        transform:translateY(70px);
+    }
+}
+
+.content{
+    position:relative;
+    z-index:2;
+
+    width:100%;
+    height:100%;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    padding:30px;
+}
+
+.line1,
+.line2,
+.line3,
+.line4{
+
+    opacity:0;
+    animation:fade 2s forwards;
+}
+
+.line1{animation-delay:1s;}
+h1{
+    opacity:0;
+    animation:fade 2s forwards;
+    animation-delay:3s;
+
+    font-size:60px;
+    font-weight:300;
+
+    margin:20px 0 40px;
+}
+
+.line2{animation-delay:6s;}
+.line3{animation-delay:8s;}
+.line4{
+    animation-delay:10s;
+    font-size:34px;
+    margin-top:20px;
+}
+
+button{
+
+    opacity:0;
+
+    animation:fade 2s forwards;
+    animation-delay:13s;
+
+    margin-top:70px;
+
+    padding:16px 34px;
+
+    font-size:22px;
+
+    border:none;
+
+    border-radius:40px;
+
+    background:#d4af37;
+
+    color:#111;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+button:hover{
+
+    transform:scale(1.05);
+
+    box-shadow:0 0 20px rgba(212,175,55,.4);
+}
+
+@keyframes fade{
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
