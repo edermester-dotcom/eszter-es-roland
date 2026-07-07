@@ -69,11 +69,11 @@ body{
     animation:fade 2s forwards;
 }
 
-.line1{animation-delay:1s;}
+.line1{animation-delay:4s;}
 h1{
     opacity:0;
     animation:fade 2s forwards;
-    animation-delay:3s;
+    animation-delay:9s;
 
     font-size:60px;
     font-weight:300;
@@ -81,10 +81,10 @@ h1{
     margin:20px 0 40px;
 }
 
-.line2{animation-delay:6s;}
-.line3{animation-delay:8s;}
+.line2{animation-delay:15s;}
+.line3{animation-delay:21s;}
 .line4{
-    animation-delay:10s;
+    animation-delay:27s;
     font-size:34px;
     margin-top:20px;
 }
@@ -94,7 +94,7 @@ button{
     opacity:0;
 
     animation:fade 2s forwards;
-    animation-delay:13s;
+    animation-delay:35s;
 
     margin-top:70px;
 
