@@ -10,7 +10,12 @@ html,body{
 }
 
 body{
-    background:#090909;
+    background:linear-gradient(
+180deg,
+#050505,
+#111111,
+#050505
+);
     color:#d4af37;
     font-family:'Cormorant Garamond',serif;
     overflow:hidden;
@@ -26,23 +31,45 @@ body{
 .background::before{
     content:"";
     position:absolute;
-    inset:0;
+    inset:-20%;
     background-image:
-        radial-gradient(#d4af37 1px, transparent 1px);
-    background-size:70px 70px;
-    opacity:.15;
-    animation:stars 40s linear infinite;
-}
+        radial-gradient(circle, rgba(212,175,55,.9) 1px, transparent 1.5px);
 
-@keyframes stars{
+    background-size:120px 120px;
+
+    opacity:.18;
+
+    animation:
+        starsMove 80s linear infinite,
+        starsFloat 12s ease-in-out infinite;
+}
+@keyframes starsMove{
+
     from{
         transform:translateY(0);
     }
+
     to{
-        transform:translateY(70px);
+        transform:translateY(120px);
     }
+
 }
 
+@keyframes starsFloat{
+
+    0%{
+        transform:scale(1) translateY(0);
+    }
+
+    50%{
+        transform:scale(1.03) translateY(-10px);
+    }
+
+    100%{
+        transform:scale(1) translateY(0);
+    }
+
+}
 .content{
     position:relative;
     z-index:2;
