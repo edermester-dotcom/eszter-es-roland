@@ -1,52 +1,43 @@
 const startButton = document.getElementById("startButton");
 
 startButton.addEventListener("click", () => {
-    document.body.classList.add("fadeOut");
-
-    setTimeout(() => {
-        openChest();
-    }, 1800);
+  document.body.classList.add("fadeOut");
+  setTimeout(openChest, 1800);
 });
 
-function openChest() {
-    document.body.classList.remove("fadeOut");
+function openChest(){
+  document.body.classList.remove("fadeOut");
 
-    document.body.innerHTML = `
-        <div class="background"></div>
+  document.body.innerHTML = `
+    <div class="background"></div>
+    <main id="app">
+      <section class="chestScene">
+        <div class="glow"></div>
+        <div class="chest">📦</div>
+        <h2>A legnagyobb kincset már megtaláltátok.</h2>
+        <p>Egymásban.</p>
+        <button id="giftButton">Nyissátok ki a ládát</button>
+      </section>
+    </main>
+  `;
 
-        <div class="chestScene">
-            <div class="glow"></div>
-
-            <div class="chest">📦</div>
-
-            <h2>A legnagyobb kincset már megtaláltátok.</h2>
-
-            <p>Egymásban.</p>
-
-            <button onclick="openGift()">Nyissátok ki a ládát</button>
-        </div>
-    `;
+  document.getElementById("giftButton").addEventListener("click", openGift);
 }
 
-function openGift() {
-    const chest = document.querySelector(".chest");
+function openGift(){
+  const chest = document.querySelector(".chest");
+  chest.style.transform = "scale(1.18) rotate(-3deg)";
+  chest.textContent = "✨";
 
-    chest.style.transform = "scale(1.2)";
-    chest.innerHTML = "✨";
-
-    createHearts();
-}
-
-function createHearts() {
-    for (let i = 0; i < 35; i++) {
-        setTimeout(() => {
-            const h = document.createElement("div");
-            h.className = "heart";
-            h.innerHTML = i % 5 === 0 ? "💸" : "💛";
-            h.style.left = Math.random() * 100 + "vw";
-            h.style.animationDuration = 4 + Math.random() * 3 + "s";
-            h.style.fontSize = 24 + Math.random() * 24 + "px";
-            document.body.appendChild(h);
-        }, i * 160);
-    }
+  for(let i=0; i<45; i++){
+    setTimeout(() => {
+      const item = document.createElement("div");
+      item.className = "heart";
+      item.textContent = i % 6 === 0 ? "💸" : "💛";
+      item.style.left = Math.random() * 100 + "vw";
+      item.style.fontSize = (24 + Math.random() * 24) + "px";
+      item.style.animationDuration = (4 + Math.random() * 3) + "s";
+      document.body.appendChild(item);
+    }, i * 120);
+  }
 }
