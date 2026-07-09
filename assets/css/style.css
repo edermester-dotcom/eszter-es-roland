@@ -5,129 +5,63 @@
 }
 
 html,body{
+
     width:100%;
     height:100%;
+    overflow:hidden;
+
+    font-family:'Cormorant Garamond',serif;
+
+    background:
+    radial-gradient(circle at top,#1b1b1b,#050505);
+
+    color:white;
+
 }
 
 body{
-    background:linear-gradient(
-180deg,
-#050505,
-#111111,
-#050505
-);
-    color:#d4af37;
-    font-family:'Cormorant Garamond',serif;
-    overflow:hidden;
-}
-
-.background{
-    position:fixed;
-    inset:0;
-    background:
-        radial-gradient(circle at center,#222 0%,#111 45%,#090909 100%);
-}
-
-.background::before{
-    content:"";
-    position:absolute;
-    inset:-20%;
-    background-image:
-        radial-gradient(circle, rgba(212,175,55,.9) 1px, transparent 1.5px);
-
-    background-size:120px 120px;
-
-    opacity:.18;
-
-    animation:
-        starsMove 80s linear infinite,
-        starsFloat 12s ease-in-out infinite;
-}
-@keyframes starsMove{
-
-    from{
-        transform:translateY(0);
-    }
-
-    to{
-        transform:translateY(120px);
-    }
-
-}
-
-@keyframes starsFloat{
-
-    0%{
-        transform:scale(1) translateY(0);
-    }
-
-    50%{
-        transform:scale(1.03) translateY(-10px);
-    }
-
-    100%{
-        transform:scale(1) translateY(0);
-    }
-
-}
-.content{
-    position:relative;
-    z-index:2;
-
-    width:100%;
-    height:100%;
 
     display:flex;
-    flex-direction:column;
     justify-content:center;
     align-items:center;
 
+}
+
+main{
+
     text-align:center;
+    max-width:900px;
+    padding:40px;
 
-    padding:30px;
 }
 
-.line1,
-.line2,
-.line3,
-.line4{
-
-    opacity:0;
-    animation:fade 2s forwards;
-}
-
-.line1{animation-delay:4s;}
 h1{
-    opacity:0;
-    animation:fade 2s forwards;
-    animation-delay:9s;
 
-    font-size:60px;
-    font-weight:300;
+    font-size:64px;
+    margin-bottom:20px;
 
-    margin:20px 0 40px;
 }
 
-.line2{animation-delay:15s;}
-.line3{animation-delay:21s;}
-.line4{
-    animation-delay:27s;
+h3{
+
     font-size:34px;
-    margin-top:20px;
+    font-weight:400;
+    margin-bottom:30px;
+
+}
+
+p{
+
+    font-size:30px;
+    line-height:1.6;
+
 }
 
 button{
 
-    opacity:0;
+    margin-top:50px;
 
-    animation:fade 2s forwards;
-    animation-delay:35s;
-
-    margin-top:70px;
-
-    padding:16px 34px;
-
-    font-size:22px;
+    padding:18px 42px;
 
     border:none;
 
@@ -137,58 +71,189 @@ button{
 
     color:#111;
 
+    font-size:22px;
+
     cursor:pointer;
 
-    transition:.3s;
+    transition:.35s;
+
 }
 
 button:hover{
 
     transform:scale(1.05);
 
-    box-shadow:0 0 20px rgba(212,175,55,.4);
-}
-
-@keyframes fade{
-
-    from{
-        opacity:0;
-        transform:translateY(20px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-.story{
-
-    max-width:700px;
+    box-shadow:0 0 25px gold;
 
 }
 
-.story p{
+#story{
+
+    text-align:center;
+    max-width:900px;
+
+}
+
+.storyLine{
 
     opacity:0;
 
-    font-size:42px;
+    transform:translateY(30px);
 
-    line-height:1.6;
+    transition:2s;
+
+    font-size:46px;
 
     margin:45px 0;
 
-    transition:opacity 2s;
+}
+
+.storyLine.visible{
+
+    opacity:1;
+
+    transform:translateY(0);
 
 }
 
-.story p.visible{
+.nextButton{
+
+    opacity:0;
+
+}
+
+.nextButton.visible{
 
     opacity:1;
 
 }
 
-#nextButton{
+.chestScene{
 
-    opacity:0;
+    width:100%;
+
+    height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.glow{
+
+    position:absolute;
+
+    width:500px;
+
+    height:500px;
+
+    border-radius:50%;
+
+    background:gold;
+
+    filter:blur(140px);
+
+    opacity:.18;
+
+    animation:pulse 5s infinite;
+
+}
+
+.chest{
+
+    font-size:130px;
+
+    transition:1.2s;
+
+    z-index:5;
+
+}
+
+.chestScene h2{
+
+    margin-top:30px;
+
+    font-size:42px;
+
+    font-weight:400;
+
+}
+
+.chestScene p{
+
+    margin-top:20px;
+
+    font-size:34px;
+
+    color:#d4af37;
+
+}
+
+.heart{
+
+    position:absolute;
+
+    bottom:-40px;
+
+    font-size:34px;
+
+    animation:floatUp linear forwards;
+
+}
+
+@keyframes floatUp{
+
+    from{
+
+        transform:translateY(0) scale(.5);
+
+        opacity:0;
+
+    }
+
+    15%{
+
+        opacity:1;
+
+    }
+
+    to{
+
+        transform:translateY(-120vh) scale(1.5);
+
+        opacity:0;
+
+    }
+
+}
+
+@keyframes pulse{
+
+    0%{
+
+        transform:scale(.9);
+
+    }
+
+    50%{
+
+        transform:scale(1.15);
+
+    }
+
+    100%{
+
+        transform:scale(.9);
+
+    }
 
 }
