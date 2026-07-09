@@ -1,141 +1,52 @@
-const messages = [
-    "Vannak pillanatok...",
-    "...amelyek örökre megváltoztatják az életünket.",
-    "2026. július 31.",
-    "Eszter és Roland",
-    "Ma egy új történet kezdődik...",
-    "...egy közös történet."
-];
+const startButton = document.getElementById("startButton");
 
-let current = 0;
+startButton.addEventListener("click", () => {
+    document.body.classList.add("fadeOut");
 
-function start() {
+    setTimeout(() => {
+        openChest();
+    }, 1800);
+});
 
-    const main = document.querySelector("main");
+function openChest() {
+    document.body.classList.remove("fadeOut");
 
-    main.innerHTML = `
-        <div id="story"></div>
+    document.body.innerHTML = `
+        <div class="background"></div>
+
+        <div class="chestScene">
+            <div class="glow"></div>
+
+            <div class="chest">📦</div>
+
+            <h2>A legnagyobb kincset már megtaláltátok.</h2>
+
+            <p>Egymásban.</p>
+
+            <button onclick="openGift()">Nyissátok ki a ládát</button>
+        </div>
     `;
-
-    showNext();
 }
 
-function showNext(){
+function openGift() {
+    const chest = document.querySelector(".chest");
 
-    const story = document.getElementById("story");
-
-    if(current >= messages.length){
-
-        showButton();
-        return;
-    }
-
-    const p = document.createElement("p");
-    p.className="storyLine";
-    p.innerHTML=messages[current];
-
-    story.appendChild(p);
-
-    setTimeout(()=>{
-        p.classList.add("visible");
-    },100);
-
-    current++;
-
-    setTimeout(showNext,4500);
-
-}
-
-function showButton(){
-
-    const story=document.getElementById("story");
-
-    const btn=document.createElement("button");
-
-    btn.innerHTML="Induljon a történet";
-
-    btn.onclick=openChest;
-
-    btn.className="nextButton";
-
-    story.appendChild(btn);
-
-    setTimeout(()=>{
-        btn.classList.add("visible");
-    },300);
-
-}
-
-function openChest(){
-
-    document.body.innerHTML=`
-
-<div class="chestScene">
-
-<div class="glow"></div>
-
-<div class="chest">
-
-🧰
-
-</div>
-
-<h2>
-
-A legnagyobb kincset már megtaláltátok.
-
-</h2>
-
-<p>
-
-Egymásban.
-
-</p>
-
-<button onclick="openGift()">
-
-Nyissátok ki a ládát
-
-</button>
-
-</div>
-
-`;
-
-}
-
-function openGift(){
-
-    const chest=document.querySelector(".chest");
-
-    chest.style.transform="scale(1.15) rotate(-4deg)";
-
-    chest.innerHTML="📦";
+    chest.style.transform = "scale(1.2)";
+    chest.innerHTML = "✨";
 
     createHearts();
-
 }
 
-function createHearts(){
-
-    for(let i=0;i<25;i++){
-
-        setTimeout(()=>{
-
-            const h=document.createElement("div");
-
-            h.className="heart";
-
-            h.innerHTML="💛";
-
-            h.style.left=Math.random()*100+"vw";
-
-            h.style.animationDuration=(4+Math.random()*3)+"s";
-
+function createHearts() {
+    for (let i = 0; i < 35; i++) {
+        setTimeout(() => {
+            const h = document.createElement("div");
+            h.className = "heart";
+            h.innerHTML = i % 5 === 0 ? "💸" : "💛";
+            h.style.left = Math.random() * 100 + "vw";
+            h.style.animationDuration = 4 + Math.random() * 3 + "s";
+            h.style.fontSize = 24 + Math.random() * 24 + "px";
             document.body.appendChild(h);
-
-        },i*180);
-
+        }, i * 160);
     }
-
 }
