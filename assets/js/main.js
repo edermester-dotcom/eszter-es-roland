@@ -13,7 +13,11 @@ function openChest(){
     <main id="app">
       <section class="chestScene">
         <div class="glow"></div>
-        <div class="chest">📦</div>
+        <div class="treasureChest">
+  <div class="chestLid"></div>
+  <div class="chestBody"></div>
+  <div class="chestLock"></div>
+</div>
         <h2>A legnagyobb kincset már megtaláltátok.</h2>
         <p>Egymásban.</p>
         <button id="giftButton">Nyissátok ki a ládát</button>
@@ -25,9 +29,8 @@ function openChest(){
 }
 
 function openGift(){
-  const chest = document.querySelector(".chest");
-  chest.style.transform = "scale(1.18) rotate(-3deg)";
-  chest.textContent = "✨";
+ const chest = document.querySelector(".treasureChest");
+chest.classList.add("open");
 
   for(let i=0; i<45; i++){
     setTimeout(() => {

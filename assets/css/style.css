@@ -178,3 +178,51 @@ body{
   .line4{font-size:46px}
   .chestScene h2{font-size:34px}
 }
+.treasureChest{
+  position:relative;
+  width:240px;
+  height:160px;
+  z-index:3;
+  margin-bottom:40px;
+}
+
+.chestLid{
+  position:absolute;
+  top:0;
+  left:20px;
+  width:200px;
+  height:70px;
+  background:linear-gradient(160deg,#7a3f18,#2b1208);
+  border:3px solid #d4af37;
+  border-radius:90px 90px 12px 12px;
+  transform-origin:bottom center;
+  transition:1.4s ease;
+  box-shadow:0 0 35px rgba(212,175,55,.35);
+}
+
+.chestBody{
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:240px;
+  height:100px;
+  background:linear-gradient(160deg,#8b451b,#2d1609);
+  border:3px solid #d4af37;
+  border-radius:18px;
+  box-shadow:0 20px 60px rgba(0,0,0,.6);
+}
+
+.chestLock{
+  position:absolute;
+  left:100px;
+  top:78px;
+  width:40px;
+  height:46px;
+  background:linear-gradient(#f7d86b,#b8860b);
+  border-radius:8px;
+  z-index:4;
+}
+
+.treasureChest.open .chestLid{
+  transform:rotateX(65deg) translateY(-28px);
+}
