@@ -1,6 +1,28 @@
+const music = document.getElementById("bgMusic");
+music.volume = 0;
+
 const startButton = document.getElementById("startButton");
 
 startButton.addEventListener("click", () => {
+    music.play();
+
+let volume = 0;
+
+const fade = setInterval(() => {
+
+    volume += 0.02;
+
+    if(volume >= 0.30){
+
+        volume = 0.30;
+
+        clearInterval(fade);
+
+    }
+
+    music.volume = volume;
+
+},120);
   document.body.classList.add("fadeOut");
   setTimeout(openChest, 1800);
 });
