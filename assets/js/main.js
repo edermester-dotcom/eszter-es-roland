@@ -1,98 +1,13 @@
-const startButton = document.getElementById("startButton");
-const music = document.getElementById("bgMusic");
-
-startButton.addEventListener("click", async () => {
-  try {
-    music.volume = 0;
-    await music.play();
-    fadeMusicTo(0.28, 4000);
-  } catch (error) {
-    console.error("A zene nem indult el:", error);
-  }
-
-  document.body.classList.add("fadeOut");
-
-  setTimeout(() => {
-    openChest();
-  }, 1800);
-});
-
-function fadeMusicTo(targetVolume, duration) {
-  const startVolume = music.volume;
-  const steps = 40;
-  const intervalTime = duration / steps;
-  let step = 0;
-
-  const timer = setInterval(() => {
-    step++;
-    const progress = step / steps;
-    music.volume =
-      startVolume + (targetVolume - startVolume) * progress;
-
-    if (step >= steps) {
-      music.volume = targetVolume;
-      clearInterval(timer);
-    }
-  }, intervalTime);
-}
-
-function openChest() {
-  document.body.classList.remove("fadeOut");
-
-  document.body.innerHTML = `
-    <div class="background"></div>
-
-    <main id="app">
-      <section class="chestScene">
-        <div class="glow"></div>
-
-        <div class="treasureChest">
-          <div class="chestLid"></div>
-          <div class="chestBody"></div>
-          <div class="chestLock"></div>
-        </div>
-
-        <h2>A legnagyobb kincset már megtaláltátok.</h2>
-        <p>Egymásban.</p>
-
-        <button id="giftButton">
-          Nyissátok ki a ládát
-        </button>
-      </section>
-    </main>
-  `;
-
-  document
-    .getElementById("giftButton")
-    .addEventListener("click", openGift);
-}
-
-function openGift() {
-  const chest = document.querySelector(".treasureChest");
-  chest.classList.add("open");
-
-  fadeMusicTo(0.16, 1200);
-
-  setTimeout(() => {
-    createHearts();
-    fadeMusicTo(0.32, 2500);
-  }, 1400);
-}
-
-function createHearts() {
-  for (let i = 0; i < 45; i++) {
-    setTimeout(() => {
-      const item = document.createElement("div");
-      item.className = "heart";
-      item.textContent = i % 6 === 0 ? "💸" : "💛";
-      item.style.left = Math.random() * 100 + "vw";
-      item.style.fontSize = 24 + Math.random() * 24 + "px";
-      item.style.animationDuration =
-        4 + Math.random() * 3 + "s";
-
-      document.body.appendChild(item);
-
-      setTimeout(() => item.remove(), 7500);
-    }, i * 120);
-  }
-}
+const music=document.getElementById('bgMusic');const entryScene=document.getElementById('entryScene');const introScene=document.getElementById('introScene');const chestScene=document.getElementById('chestScene');const finalScene=document.getElementById('finalScene');const enterButton=document.getElementById('enterButton');const discoverButton=document.getElementById('discoverButton');const openChestButton=document.getElementById('openChestButton');const treasureChest=document.getElementById('treasureChest');const burstLayer=document.getElementById('burstLayer');let introTimers=[];let musicFadeTimer=null;
+enterButton.addEventListener('click',async()=>{await startMusic();switchScene(entryScene,introScene);startIntroSequence()});
+discoverButton.addEventListener('click',()=>{fadeMusicTo(.18,1200);switchScene(introScene,chestScene);setTimeout(()=>treasureChest.classList.add('show'),1000);[...document.querySelectorAll('.chest-line')].forEach((line,i)=>setTimeout(()=>line.classList.add('show'),2200+i*2600));setTimeout(()=>openChestButton.classList.add('show'),10000)});
+openChestButton.addEventListener('click',()=>{openChestButton.disabled=true;openChestButton.classList.remove('show');fadeMusicTo(.10,1000);treasureChest.classList.add('open');setTimeout(()=>{createElegantBurst();fadeMusicTo(.30,2500)},1500);setTimeout(()=>{switchScene(chestScene,finalScene);fadeMusicTo(.16,3500)},6500)});
+async function startMusic(){try{music.volume=0;await music.play();fadeMusicTo(.28,4000)}catch(e){console.warn('A zene nem indult el:',e)}}
+function switchScene(from,to){from.classList.remove('active');setTimeout(()=>to.classList.add('active'),350)}
+function startIntroSequence(){clearIntroTimers();const lines=[...document.querySelectorAll('.intro-line')];lines.forEach((line,i)=>{const delay=Number(line.dataset.delay||0);introTimers.push(setTimeout(()=>{lines.forEach(other=>{if(other!==line){other.classList.remove('show');other.classList.add('hide')}});line.classList.remove('hide');line.classList.add('show')},delay));const nextDelay=i<lines.length-1?Number(lines[i+1].dataset.delay):28000;introTimers.push(setTimeout(()=>{line.classList.remove('show');line.classList.add('hide')},Math.max(delay+3200,nextDelay-900)))});introTimers.push(setTimeout(()=>discoverButton.classList.add('show'),28000))}
+function clearIntroTimers(){introTimers.forEach(clearTimeout);introTimers=[]}
+function fadeMusicTo(target,duration){if(musicFadeTimer)clearInterval(musicFadeTimer);const start=music.volume,steps=50,stepTime=duration/steps;let step=0;musicFadeTimer=setInterval(()=>{step++;const p=step/steps;music.volume=Math.min(1,Math.max(0,start+(target-start)*p));if(step>=steps){music.volume=target;clearInterval(musicFadeTimer);musicFadeTimer=null}},stepTime)}
+function createElegantBurst(){burstLayer.innerHTML='';for(let i=0;i<44;i++){const item=document.createElement('div');const isNote=i%5===0;item.className=`burst-item ${isNote?'note':'heart'}`;item.style.setProperty('--size',`${18+Math.random()*26}px`);item.style.setProperty('--duration',`${4.2+Math.random()*2.5}s`);item.style.setProperty('--delay',`${Math.random()*1.1}s`);item.style.setProperty('--x',`${-46+Math.random()*92}vw`);item.style.setProperty('--y',`${-38-Math.random()*58}vh`);item.style.setProperty('--r',`${-70+Math.random()*140}deg`);item.innerHTML=isNote?banknoteSvg():heartSvg();burstLayer.appendChild(item);setTimeout(()=>item.remove(),8000)}}
+function heartSvg(){return `<svg viewBox="0 0 64 64"><defs><linearGradient id="hg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fff1ad"/><stop offset="42%" stop-color="#d8b35a"/><stop offset="100%" stop-color="#8b5a14"/></linearGradient></defs><path fill="url(#hg)" d="M32 56S7 41 7 22C7 12 14 7 22 7c5 0 8 2 10 6 2-4 5-6 10-6 8 0 15 5 15 15 0 19-25 34-25 34Z"/></svg>`}
+function banknoteSvg(){return `<svg viewBox="0 0 110 64"><defs><linearGradient id="ng" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fff0a8"/><stop offset="50%" stop-color="#d2aa50"/><stop offset="100%" stop-color="#7d4f11"/></linearGradient></defs><rect x="2" y="2" width="106" height="60" rx="8" fill="rgba(18,12,5,.9)" stroke="url(#ng)" stroke-width="3"/><rect x="10" y="10" width="90" height="44" rx="6" fill="none" stroke="rgba(244,215,123,.55)" stroke-width="2"/><circle cx="55" cy="32" r="12" fill="none" stroke="url(#ng)" stroke-width="2"/></svg>`}
+const canvas=document.getElementById('particles');const ctx=canvas.getContext('2d');let particles=[];function resizeCanvas(){const dpr=Math.min(devicePixelRatio||1,2);canvas.width=innerWidth*dpr;canvas.height=innerHeight*dpr;canvas.style.width=innerWidth+'px';canvas.style.height=innerHeight+'px';ctx.setTransform(dpr,0,0,dpr,0,0);const count=Math.max(28,Math.floor(innerWidth/20));particles=Array.from({length:count},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:.45+Math.random()*1.45,vx:-.05+Math.random()*.1,vy:-.12-Math.random()*.22,alpha:.08+Math.random()*.34,twinkle:Math.random()*Math.PI*2}))}function drawParticles(time=0){ctx.clearRect(0,0,innerWidth,innerHeight);const v=ctx.createRadialGradient(innerWidth*.5,innerHeight*.42,0,innerWidth*.5,innerHeight*.42,Math.max(innerWidth,innerHeight)*.72);v.addColorStop(0,'rgba(216,179,90,.055)');v.addColorStop(.45,'rgba(20,15,8,.02)');v.addColorStop(1,'rgba(0,0,0,.58)');ctx.fillStyle=v;ctx.fillRect(0,0,innerWidth,innerHeight);particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.y<-8){p.y=innerHeight+8;p.x=Math.random()*innerWidth}if(p.x<-8)p.x=innerWidth+8;if(p.x>innerWidth+8)p.x=-8;const pulse=.55+Math.sin(time*.0016+p.twinkle)*.45;const a=p.alpha*pulse;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(244,215,123,${a})`;ctx.shadowBlur=7;ctx.shadowColor=`rgba(216,179,90,${a})`;ctx.fill();ctx.shadowBlur=0});requestAnimationFrame(drawParticles)}window.addEventListener('resize',resizeCanvas);resizeCanvas();requestAnimationFrame(drawParticles);
