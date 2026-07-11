@@ -85,3 +85,46 @@
   min-height:48px;
   padding:12px 24px;
 }
+/* LÁDA MOBILOS MÉRETEZÉS – ez felülír minden korábbi beállítást */
+
+.treasure-chest{
+  width:auto !important;
+  height:auto !important;
+
+  max-width:82vw !important;
+  max-height:32dvh !important;
+
+  margin:0 auto !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+
+  overflow:hidden !important;
+
+  transform:none !important;
+}
+
+.treasure-chest.show{
+  transform:none !important;
+}
+
+.chest-image{
+  display:block !important;
+
+  width:auto !important;
+  height:auto !important;
+
+  max-width:82vw !important;
+  max-height:32dvh !important;
+
+  object-fit:contain !important;
+
+  border-radius:12px !important;
+
+  transform:none !important;
+}
+
+.chest-image.opening{
+  transform:none !important;
+}
