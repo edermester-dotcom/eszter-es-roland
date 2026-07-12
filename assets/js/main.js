@@ -94,7 +94,7 @@ function startIntro(){
 
   introTimers.push(setTimeout(()=>{
     discoverButton.classList.add('show');
-  },28000));
+  },22500));
 }
 
 function clearIntroTimers(){
