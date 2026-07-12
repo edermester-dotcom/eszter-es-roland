@@ -22,10 +22,19 @@ discoverButton.addEventListener('click',()=>{
   fadeMusicTo(.18,1200);
   switchScene(introScene,chestScene);
 
-  const lines=[...document.querySelectorAll('.story-line')];
-  lines.forEach((line,i)=>{
-    setTimeout(()=>line.classList.add('show'),800+i*2100);
-  });
+  const lines = [...document.querySelectorAll(".story-line")];
+
+setTimeout(() => {
+  lines[0].classList.add("show");
+}, 1000);
+
+setTimeout(() => {
+  lines[1].classList.add("show");
+}, 3800);
+
+setTimeout(() => {
+  lines[2].classList.add("show");
+}, 7000);
 
   setTimeout(()=>openButton.classList.add('show'),7600);
 });
