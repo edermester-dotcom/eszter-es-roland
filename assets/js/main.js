@@ -92,12 +92,14 @@ function startIntro(){
     },Math.max(at+3000,next-900)));
   });
 
-  introTimers.push(setTimeout(()=>{
-   discoverButton.classList.add('show');
+  introTimers.push(setTimeout(() => {
+    discoverButton.classList.add('show');
 
-setTimeout(() => {
-  discoverButton.classList.add('ready');
-}, 4200);
+    setTimeout(() => {
+      discoverButton.classList.add('ready');
+    }, 4200);
+
+  }, 22500));
 }
 
 function clearIntroTimers(){
