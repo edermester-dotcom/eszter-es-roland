@@ -12,9 +12,9 @@ const sparkLayer=document.getElementById('sparkLayer');
 let musicFadeTimer=null;
 let introTimers=[];
 
-enterButton.addEventListener('click',async()=>{
+enterButton.addEventListener("click", async () => {
   await startMusic();
-  switchScene(entryScene,introScene);
+  switchScene(entryScene, introScene);
   startIntro();
 });
 
