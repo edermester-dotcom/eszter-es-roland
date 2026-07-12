@@ -18,25 +18,31 @@ enterButton.addEventListener("click", async () => {
   startIntro();
 });
 
-discoverButton.addEventListener('click',()=>{
-  fadeMusicTo(.18,1200);
-  switchScene(introScene,chestScene);
+discoverButton.addEventListener("click", () => {
+  fadeMusicTo(0.18, 1200);
+  switchScene(introScene, chestScene);
 
   const lines = [...document.querySelectorAll(".story-line")];
 
-setTimeout(() => {
-  lines[0].classList.add("show");
-}, 1000);
+  // Biztosan rejtve indul minden szöveg
+  lines.forEach(line => line.classList.remove("show"));
 
-setTimeout(() => {
-  lines[1].classList.add("show");
-}, 3800);
+  // 2 másodpercig csak a láda és a zene látszik
+  setTimeout(() => {
+    lines[0].classList.add("show");
+  }, 2000);
 
-setTimeout(() => {
-  lines[2].classList.add("show");
-}, 7000);
+  setTimeout(() => {
+    lines[1].classList.add("show");
+  }, 5000);
 
-  setTimeout(()=>openButton.classList.add('show'),7600);
+  setTimeout(() => {
+    lines[2].classList.add("show");
+  }, 8300);
+
+  setTimeout(() => {
+    openButton.classList.add("show");
+  }, 9800);
 });
 
 openButton.addEventListener("click", () => {
