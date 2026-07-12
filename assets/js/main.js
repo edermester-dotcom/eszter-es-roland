@@ -30,22 +30,26 @@ discoverButton.addEventListener('click',()=>{
   setTimeout(()=>openButton.classList.add('show'),7600);
 });
 
-openButton.addEventListener('click',()=>{
-  openButton.disabled=true;
-  openButton.classList.remove('show');
-  fadeMusicTo(.10,900);
+openButton.addEventListener("click", () => {
+  openButton.disabled = true;
+  openButton.classList.remove("show");
 
-  chestStage.classList.add('opening');
-  setTimeout(createSparks,820);
+  fadeMusicTo(0.08, 900);
 
-  setTimeout(()=>{
-    fadeMusicTo(.28,2200);
-  },1500);
+  chestStage.classList.add("opening");
 
-  setTimeout(()=>{
-    switchScene(chestScene,finalScene);
-    fadeMusicTo(.16,3200);
-  },7600);
+  setTimeout(() => {
+    createSparks();
+  }, 2100);
+
+  setTimeout(() => {
+    fadeMusicTo(0.28, 2400);
+  }, 2500);
+
+  setTimeout(() => {
+    switchScene(chestScene, finalScene);
+    fadeMusicTo(0.16, 3200);
+  }, 9000);
 });
 
 async function startMusic(){
