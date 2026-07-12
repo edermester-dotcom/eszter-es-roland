@@ -1,16 +1,20 @@
-const music=document.getElementById('bgMusic');
-const entryScene=document.getElementById('entryScene');
-const introScene=document.getElementById('introScene');
-const chestScene=document.getElementById('chestScene');
-const finalScene=document.getElementById('finalScene');
-const enterButton=document.getElementById('enterButton');
-const discoverButton=document.getElementById('discoverButton');
-const openButton=document.getElementById('openButton');
-const chestStage=document.getElementById('chestStage');
-const sparkLayer=document.getElementById('sparkLayer');
+const music = document.getElementById("bgMusic");
+const entryScene = document.getElementById("entryScene");
+const introScene = document.getElementById("introScene");
+const chestScene = document.getElementById("chestScene");
+const finalScene = document.getElementById("finalScene");
 
-let musicFadeTimer=null;
-let introTimers=[];
+const enterButton = document.getElementById("enterButton");
+const discoverButton = document.getElementById("discoverButton");
+const openButton = document.getElementById("openButton");
+
+const chestStage = document.getElementById("chestStage");
+const sparkLayer = document.getElementById("sparkLayer");
+
+let musicFadeTimer = null;
+let introTimers = [];
+
+/* BELÉPÉS */
 
 enterButton.addEventListener("click", async () => {
   await startMusic();
@@ -18,32 +22,25 @@ enterButton.addEventListener("click", async () => {
   startIntro();
 });
 
+/* ÁTLÉPÉS A LÁDA JELENETÉBE */
+
 discoverButton.addEventListener("click", () => {
   fadeMusicTo(0.18, 1200);
   switchScene(introScene, chestScene);
 
   const lines = [...document.querySelectorAll(".story-line")];
 
-  // Biztosan rejtve indul minden szöveg
-  lines.forEach(line => line.classList.remove("show"));
+  lines.forEach((line) => {
+    line.classList.remove("show");
+  });
 
-  // 2 másodpercig csak a láda és a zene látszik
-  setTimeout(() => {
-    lines[0].classList.add("show");
-  }, 2000);
-
-  setTimeout(() => {
-    lines[1].classList.add("show");
-  }, 5000);
-
-  setTimeout(() => {
-    lines[2].classList.add("show");
-  }, 8300);
-
+  /* Először csak a láda látszik */
   setTimeout(() => {
     openButton.classList.add("show");
-  }, 9800);
+  }, 1500);
 });
+
+/* LÁDANYITÁS */
 
 openButton.addEventListener("click", () => {
   openButton.disabled = true;
@@ -61,165 +58,280 @@ openButton.addEventListener("click", () => {
     fadeMusicTo(0.28, 2400);
   }, 2500);
 
+  const lines = [...document.querySelectorAll(".story-line")];
+
+  /*
+    A ládanyitás kb. 4,8 másodperc.
+    Utána kb. 1 másodperc szünet következik.
+  */
+
+  setTimeout(() => {
+    lines[0].classList.add("show");
+  }, 5800);
+
+  setTimeout(() => {
+    lines[1].classList.add("show");
+  }, 8600);
+
+  setTimeout(() => {
+    lines[2].classList.add("show");
+  }, 11800);
+
   setTimeout(() => {
     switchScene(chestScene, finalScene);
     fadeMusicTo(0.16, 3200);
-  }, 9000);
+  }, 16500);
 });
 
-async function startMusic(){
-  try{
-    music.volume=0;
+/* ZENE INDÍTÁSA */
+
+async function startMusic() {
+  try {
+    music.volume = 0;
     await music.play();
-    fadeMusicTo(.28,4000);
-  }catch(err){
-    console.warn('A zene nem indult el:',err);
+    fadeMusicTo(0.28, 4000);
+  } catch (error) {
+    console.warn("A zene nem indult el:", error);
   }
 }
 
-function switchScene(from,to){
-  from.classList.remove('active');
-  setTimeout(()=>to.classList.add('active'),320);
+/* JELENETVÁLTÁS */
+
+function switchScene(fromScene, toScene) {
+  fromScene.classList.remove("active");
+
+  setTimeout(() => {
+    toScene.classList.add("active");
+  }, 320);
 }
 
-function startIntro(){
+/* NYITÓ SZÖVEGEK */
+
+function startIntro() {
   clearIntroTimers();
-  const lines=[...document.querySelectorAll('.intro-line')];
 
-  lines.forEach((line,index)=>{
-    const at=Number(line.dataset.at||0);
+  const lines = [...document.querySelectorAll(".intro-line")];
 
-    introTimers.push(setTimeout(()=>{
-      lines.forEach(other=>{
-        if(other!==line){
-          other.classList.remove('show');
-          other.classList.add('hide');
-        }
-      });
-      line.classList.remove('hide');
-      line.classList.add('show');
-    },at));
+  lines.forEach((line, index) => {
+    const at = Number(line.dataset.at || 0);
 
-    const next=index<lines.length-1?Number(lines[index+1].dataset.at):28000;
-    introTimers.push(setTimeout(()=>{
-      line.classList.remove('show');
-      line.classList.add('hide');
-    },Math.max(at+3000,next-900)));
+    introTimers.push(
+      setTimeout(() => {
+        lines.forEach((otherLine) => {
+          if (otherLine !== line) {
+            otherLine.classList.remove("show");
+            otherLine.classList.add("hide");
+          }
+        });
+
+        line.classList.remove("hide");
+        line.classList.add("show");
+      }, at)
+    );
+
+    const next =
+      index < lines.length - 1
+        ? Number(lines[index + 1].dataset.at)
+        : 22500;
+
+    introTimers.push(
+      setTimeout(() => {
+        line.classList.remove("show");
+        line.classList.add("hide");
+      }, Math.max(at + 3000, next - 900))
+    );
   });
 
-  introTimers.push(setTimeout(() => {
-    discoverButton.classList.add('show');
+  introTimers.push(
+    setTimeout(() => {
+      discoverButton.classList.add("show");
+
+      setTimeout(() => {
+        discoverButton.classList.add("ready");
+      }, 1600);
+    }, 22500)
+  );
+}
+
+function clearIntroTimers() {
+  introTimers.forEach(clearTimeout);
+  introTimers = [];
+}
+
+/* HANGERŐ FINOM ÁTMENETE */
+
+function fadeMusicTo(targetVolume, duration) {
+  if (musicFadeTimer) {
+    clearInterval(musicFadeTimer);
+  }
+
+  const startVolume = music.volume;
+  const steps = 45;
+  const interval = duration / steps;
+
+  let step = 0;
+
+  musicFadeTimer = setInterval(() => {
+    step += 1;
+
+    const progress = step / steps;
+
+    music.volume = Math.max(
+      0,
+      Math.min(
+        1,
+        startVolume + (targetVolume - startVolume) * progress
+      )
+    );
+
+    if (step >= steps) {
+      music.volume = targetVolume;
+      clearInterval(musicFadeTimer);
+      musicFadeTimer = null;
+    }
+  }, interval);
+}
+
+/* ARANY RÉSZECSKÉK A LÁDÁBÓL */
+
+function createSparks() {
+  sparkLayer.innerHTML = "";
+
+  for (let i = 0; i < 42; i += 1) {
+    const spark = document.createElement("span");
+
+    spark.className = "spark";
+
+    spark.style.setProperty(
+      "--s",
+      `${1.5 + Math.random() * 3.8}px`
+    );
+
+    spark.style.setProperty(
+      "--d",
+      `${2.8 + Math.random() * 2.8}s`
+    );
+
+    spark.style.setProperty(
+      "--delay",
+      `${Math.random() * 1.15}s`
+    );
+
+    spark.style.setProperty(
+      "--x",
+      `${-120 + Math.random() * 240}px`
+    );
+
+    spark.style.setProperty(
+      "--y",
+      `${-70 - Math.random() * 180}px`
+    );
+
+    sparkLayer.appendChild(spark);
 
     setTimeout(() => {
-      discoverButton.classList.add('ready');
-    }, 1600);
-
-  }, 22500));
-}
-
-function clearIntroTimers(){
-  introTimers.forEach(clearTimeout);
-  introTimers=[];
-}
-
-function fadeMusicTo(target,duration){
-  if(musicFadeTimer)clearInterval(musicFadeTimer);
-
-  const start=music.volume;
-  const steps=45;
-  let step=0;
-  const interval=duration/steps;
-
-  musicFadeTimer=setInterval(()=>{
-    step++;
-    const p=step/steps;
-    music.volume=Math.max(0,Math.min(1,start+(target-start)*p));
-
-    if(step>=steps){
-      music.volume=target;
-      clearInterval(musicFadeTimer);
-      musicFadeTimer=null;
-    }
-  },interval);
-}
-
-function createSparks(){
-  sparkLayer.innerHTML='';
-
-  for(let i=0;i<42;i++){
-    const s=document.createElement('span');
-    s.className='spark';
-    s.style.setProperty('--s',`${1.5+Math.random()*3.8}px`);
-    s.style.setProperty('--d',`${2.8+Math.random()*2.8}s`);
-    s.style.setProperty('--delay',`${Math.random()*1.15}s`);
-    s.style.setProperty('--x',`${-120+Math.random()*240}px`);
-    s.style.setProperty('--y',`${-70-Math.random()*180}px`);
-    sparkLayer.appendChild(s);
-    setTimeout(()=>s.remove(),6500);
+      spark.remove();
+    }, 6500);
   }
 }
 
-/* Háttér aranypor */
-const canvas=document.getElementById('particles');
-const ctx=canvas.getContext('2d');
-let dust=[];
+/* HÁTTÉR ARANYPOR */
 
-function resize(){
-  const dpr=Math.min(window.devicePixelRatio||1,2);
-  canvas.width=innerWidth*dpr;
-  canvas.height=innerHeight*dpr;
-  canvas.style.width=innerWidth+'px';
-  canvas.style.height=innerHeight+'px';
-  ctx.setTransform(dpr,0,0,dpr,0,0);
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
 
-  dust=Array.from({length:Math.max(30,Math.floor(innerWidth/18))},()=>({
-    x:Math.random()*innerWidth,
-    y:Math.random()*innerHeight,
-    r:.4+Math.random()*1.35,
-    vx:-.04+Math.random()*.08,
-    vy:-.10-Math.random()*.18,
-    a:.06+Math.random()*.28,
-    t:Math.random()*Math.PI*2
-  }));
+let dust = [];
+
+function resize() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  canvas.width = innerWidth * dpr;
+  canvas.height = innerHeight * dpr;
+
+  canvas.style.width = `${innerWidth}px`;
+  canvas.style.height = `${innerHeight}px`;
+
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  dust = Array.from(
+    {
+      length: Math.max(30, Math.floor(innerWidth / 18)),
+    },
+    () => ({
+      x: Math.random() * innerWidth,
+      y: Math.random() * innerHeight,
+      r: 0.4 + Math.random() * 1.35,
+      vx: -0.04 + Math.random() * 0.08,
+      vy: -0.1 - Math.random() * 0.18,
+      a: 0.06 + Math.random() * 0.28,
+      t: Math.random() * Math.PI * 2,
+    })
+  );
 }
 
-function draw(time=0){
-  ctx.clearRect(0,0,innerWidth,innerHeight);
+function draw(time = 0) {
+  ctx.clearRect(0, 0, innerWidth, innerHeight);
 
-  const vignette=ctx.createRadialGradient(
-    innerWidth*.5,innerHeight*.42,0,
-    innerWidth*.5,innerHeight*.42,
-    Math.max(innerWidth,innerHeight)*.72
+  const vignette = ctx.createRadialGradient(
+    innerWidth * 0.5,
+    innerHeight * 0.42,
+    0,
+    innerWidth * 0.5,
+    innerHeight * 0.42,
+    Math.max(innerWidth, innerHeight) * 0.72
   );
-  vignette.addColorStop(0,'rgba(217,179,91,.05)');
-  vignette.addColorStop(.5,'rgba(10,8,4,.02)');
-  vignette.addColorStop(1,'rgba(0,0,0,.62)');
-  ctx.fillStyle=vignette;
-  ctx.fillRect(0,0,innerWidth,innerHeight);
 
-  dust.forEach(p=>{
-    p.x+=p.vx;
-    p.y+=p.vy;
+  vignette.addColorStop(0, "rgba(217,179,91,.05)");
+  vignette.addColorStop(0.5, "rgba(10,8,4,.02)");
+  vignette.addColorStop(1, "rgba(0,0,0,.62)");
 
-    if(p.y<-8){p.y=innerHeight+8;p.x=Math.random()*innerWidth}
-    if(p.x<-8)p.x=innerWidth+8;
-    if(p.x>innerWidth+8)p.x=-8;
+  ctx.fillStyle = vignette;
+  ctx.fillRect(0, 0, innerWidth, innerHeight);
 
-    const pulse=.55+Math.sin(time*.0016+p.t)*.45;
-    const a=p.a*pulse;
+  dust.forEach((particle) => {
+    particle.x += particle.vx;
+    particle.y += particle.vy;
+
+    if (particle.y < -8) {
+      particle.y = innerHeight + 8;
+      particle.x = Math.random() * innerWidth;
+    }
+
+    if (particle.x < -8) {
+      particle.x = innerWidth + 8;
+    }
+
+    if (particle.x > innerWidth + 8) {
+      particle.x = -8;
+    }
+
+    const pulse =
+      0.55 + Math.sin(time * 0.0016 + particle.t) * 0.45;
+
+    const alpha = particle.a * pulse;
 
     ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle=`rgba(243,215,124,${a})`;
-    ctx.shadowBlur=7;
-    ctx.shadowColor=`rgba(217,179,91,${a})`;
+    ctx.arc(
+      particle.x,
+      particle.y,
+      particle.r,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.fillStyle = `rgba(243,215,124,${alpha})`;
+    ctx.shadowBlur = 7;
+    ctx.shadowColor = `rgba(217,179,91,${alpha})`;
+
     ctx.fill();
-    ctx.shadowBlur=0;
+
+    ctx.shadowBlur = 0;
   });
 
   requestAnimationFrame(draw);
 }
 
-window.addEventListener('resize',resize);
+window.addEventListener("resize", resize);
+
 resize();
 requestAnimationFrame(draw);
