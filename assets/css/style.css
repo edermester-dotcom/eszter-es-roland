@@ -136,7 +136,7 @@ body{
 .discover.show{
   opacity:1;
   pointer-events:auto;
-  animation:discoverAppear 1.8s ease-out forwards;
+  animation:discoverAppear 2.6s cubic-bezier(.22,.61,.36,1) forwards;
 }
 .chest-wrap{
   display:flex;
@@ -488,20 +488,34 @@ body{
 
   0%{
     opacity:0;
-    transform:translateY(20px) scale(.94);
-    filter:blur(4px);
+    transform:translateY(26px) scale(.90);
+    filter:blur(8px);
   }
 
-  60%{
-    opacity:1;
-    transform:translateY(0) scale(1.03);
+  25%{
+    opacity:.08;
+    transform:translateY(22px) scale(.92);
+    filter:blur(6px);
+  }
+
+  55%{
+    opacity:.45;
+    transform:translateY(10px) scale(.97);
+    filter:blur(3px);
+  }
+
+  80%{
+    opacity:.92;
+    transform:translateY(0) scale(1.02);
     filter:blur(0);
   }
 
   100%{
     opacity:1;
     transform:translateY(0) scale(1);
-    filter:blur(0);
+    filter:none;
   }
+
+}
 
 }
