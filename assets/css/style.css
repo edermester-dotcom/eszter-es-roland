@@ -129,14 +129,33 @@ body{
 .discover{
   position:absolute;
   bottom:max(10vh,calc(env(safe-area-inset-bottom) + 26px));
+
   opacity:0;
   pointer-events:none;
-  transition:opacity 1.25s ease;
+
+  transform:translateY(18px) scale(.97);
+  filter:blur(5px);
+
+  animation:none;
+
+  transition:
+    opacity 4s ease,
+    transform 4s cubic-bezier(.22,.61,.36,1),
+    filter 4s ease;
 }
+
 .discover.show{
   opacity:1;
   pointer-events:auto;
-  animation:discoverAppear 2.6s cubic-bezier(.22,.61,.36,1) forwards;
+
+  transform:translateY(0) scale(1);
+  filter:blur(0);
+
+  animation:none;
+}
+
+.discover.ready{
+  animation:buttonBreath 7s ease-in-out infinite;
 }
 .chest-wrap{
   display:flex;
