@@ -139,9 +139,9 @@ body{
   animation:none;
 
   transition:
-    opacity 4s ease,
-    transform 4s cubic-bezier(.22,.61,.36,1),
-    filter 4s ease;
+  opacity 2.2s ease,
+  transform 2.2s cubic-bezier(.22,.61,.36,1),
+  filter 2.2s ease;
 }
 
 .discover.show{

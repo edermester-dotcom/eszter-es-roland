@@ -97,7 +97,7 @@ function startIntro(){
 
     setTimeout(() => {
       discoverButton.classList.add('ready');
-    }, 4200);
+    }, 2400);
 
   }, 22500));
 }
