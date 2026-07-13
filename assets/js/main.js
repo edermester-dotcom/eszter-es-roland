@@ -29,7 +29,7 @@ enterButton.addEventListener("click", async () => {
 /* ÁTLÉPÉS A LÁDA JELENETÉBE */
 
 discoverButton.addEventListener("click", () => {
-  fadeMusicTo(0.18, 1200);
+  fadeMusicTo(0.31, 1600);
   switchScene(introScene, chestScene);
 
   const lines = [...document.querySelectorAll(".story-line")];
@@ -47,7 +47,7 @@ discoverButton.addEventListener("click", () => {
 /* LÁDANYITÁS */
 
 openButton.addEventListener("click", () => {
-    fetch("https://ntfy.sh/eszter-roland-7f3k9m2x-2026", {
+  fetch("https://ntfy.sh/eszter-roland-7f3k9m2x-2026", {
     method: "POST",
     body: "⏳ A láda nyitása elindult. Készülj az utalásra!"
   }).catch(() => {});
@@ -58,10 +58,14 @@ openButton.addEventListener("click", () => {
       body: "🔔 MOST! A láda teljesen kinyílt."
     }).catch(() => {});
   }, 4800);
+
   openButton.disabled = true;
   openButton.classList.remove("show");
 
-  fadeMusicTo(0.08, 900);
+  // A nyitás kezdetén visszahalkul.
+  setTimeout(() => {
+    fadeMusicTo(0.18, 2200);
+}, 600);
 
   chestStage.classList.add("opening");
 
@@ -69,18 +73,16 @@ openButton.addEventListener("click", () => {
     createSparks();
   }, 2100);
 
+  // A láda kitárulásakor érzelmi csúcspont.
   setTimeout(() => {
-    fadeMusicTo(0.28, 2400);
+    fadeMusicTo(0.38, 2300);
   }, 2500);
 
   const lines = [...document.querySelectorAll(".story-line")];
 
-  /*
-    A ládanyitás kb. 4,8 másodperc.
-    Utána kb. 1 másodperc szünet következik.
-  */
-
+  // Az első mondatnál finoman visszahalkul.
   setTimeout(() => {
+    fadeMusicTo(0.29, 1500);
     lines[0].classList.add("show");
   }, 5800);
 
@@ -92,9 +94,14 @@ openButton.addEventListener("click", () => {
     lines[2].classList.add("show");
   }, 11800);
 
+  // Végső jelenet: kis emelkedés, majd teljes elhalkulás.
   setTimeout(() => {
     switchScene(chestScene, finalScene);
-    fadeMusicTo(0.16, 3200);
+    fadeMusicTo(0.33, 1800);
+
+    setTimeout(() => {
+      fadeMusicTo(0, 12000);
+    }, 5000);
   }, 16500);
 });
 
@@ -104,7 +111,7 @@ async function startMusic() {
   try {
     music.volume = 0;
     await music.play();
-    fadeMusicTo(0.28, 4000);
+    fadeMusicTo(0.24, 4000);
   } catch (error) {
     console.warn("A zene nem indult el:", error);
   }
