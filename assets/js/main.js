@@ -96,13 +96,28 @@ openButton.addEventListener("click", () => {
 
   // Végső jelenet: kis emelkedés, majd teljes elhalkulás.
   setTimeout(() => {
-    switchScene(chestScene, finalScene);
-    fadeMusicTo(0.33, 1800);
+  switchScene(chestScene, finalScene);
+  fadeMusicTo(0.33, 1800);
 
-    setTimeout(() => {
-      fadeMusicTo(0, 12000);
-    }, 5000);
-  }, 16500);
+  const finalMessage = document.getElementById("finalMessage");
+  const endCard = document.getElementById("endCard");
+
+  setTimeout(() => {
+    finalMessage.classList.add("hide");
+  }, 6000);
+
+  setTimeout(() => {
+    endCard.classList.add("show");
+  }, 8500);
+
+  setTimeout(() => {
+    fadeMusicTo(0, 12000);
+  }, 9500);
+
+  setTimeout(() => {
+    finalScene.classList.add("fade-to-black");
+  }, 17500);
+}, 16500);
 });
 
 /* ZENE INDÍTÁSA */

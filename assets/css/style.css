@@ -538,3 +538,72 @@ body{
 }
 
 }
+.final-copy{
+  position:relative;
+  width:min(92vw,860px);
+  min-height:76svh;
+  min-height:76dvh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.final-message,
+.end-card{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+.final-message{
+  opacity:1;
+  transition:opacity 2.5s ease;
+}
+
+.final-message.hide{
+  opacity:0;
+}
+
+.end-card{
+  opacity:0;
+  transform:scale(.985);
+  transition:
+    opacity 3s ease,
+    transform 3s ease;
+}
+
+.end-card.show{
+  opacity:1;
+  transform:scale(1);
+}
+
+.end-monogram{
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(48px,11vw,86px);
+  color:#f3d77c;
+  letter-spacing:.08em;
+}
+
+.end-date{
+  margin-top:18px;
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(22px,5vw,34px);
+  color:rgba(245,239,223,.78);
+  letter-spacing:.08em;
+}
+
+.end-card .made-with-love{
+  position:static;
+  margin-top:28px;
+  font-size:13px;
+  color:rgba(217,179,91,.42);
+}
+
+#finalScene.fade-to-black{
+  opacity:0;
+  transition:opacity 6s ease;
+}
