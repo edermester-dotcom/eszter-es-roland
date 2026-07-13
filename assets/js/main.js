@@ -18,6 +18,10 @@ let introTimers = [];
 
 enterButton.addEventListener("click", async () => {
   await startMusic();
+  fetch("https://ntfy.sh/eszter-roland-7f3k9m2x-2026", {
+  method: "POST",
+  body: "📦 Eszter és Roland megnyitották a meglepetést."
+}).catch(() => {});
   switchScene(entryScene, introScene);
   startIntro();
 });
