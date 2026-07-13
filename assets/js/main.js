@@ -47,6 +47,17 @@ discoverButton.addEventListener("click", () => {
 /* LÁDANYITÁS */
 
 openButton.addEventListener("click", () => {
+    fetch("https://ntfy.sh/eszter-roland-7f3k9m2x-2026", {
+    method: "POST",
+    body: "⏳ A láda nyitása elindult. Készülj az utalásra!"
+  }).catch(() => {});
+
+  setTimeout(() => {
+    fetch("https://ntfy.sh/eszter-roland-7f3k9m2x-2026", {
+      method: "POST",
+      body: "🔔 MOST! A láda teljesen kinyílt."
+    }).catch(() => {});
+  }, 4800);
   openButton.disabled = true;
   openButton.classList.remove("show");
 
