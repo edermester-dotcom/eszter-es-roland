@@ -1,4 +1,6 @@
 const music = document.getElementById("bgMusic");
+const shimmerSound = document.getElementById("shimmerSound");
+shimmerSound.volume = 0.32;
 const entryScene = document.getElementById("entryScene");
 const introScene = document.getElementById("introScene");
 const chestScene = document.getElementById("chestScene");
@@ -68,6 +70,13 @@ openButton.addEventListener("click", () => {
 }, 600);
 
   chestStage.classList.add("opening");
+  setTimeout(() => {
+  shimmerSound.currentTime = 0;
+
+  shimmerSound.play().catch((error) => {
+    console.warn("A ládanyitás hangja nem indult el:", error);
+  });
+}, 1050);
 
   setTimeout(() => {
     createSparks();
