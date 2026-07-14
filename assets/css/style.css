@@ -607,3 +607,59 @@ body{
   opacity:0;
   transition:opacity 6s ease;
 }
+/* Erősebb fény a ládanyitás képváltásának elfedésére */
+
+.chest-stage::before{
+  content:"";
+  position:absolute;
+  inset:-18%;
+  opacity:0;
+  background:
+    radial-gradient(
+      circle at 50% 52%,
+      rgba(255,255,245,1) 0%,
+      rgba(255,239,185,.98) 18%,
+      rgba(255,207,98,.9) 34%,
+      rgba(255,171,32,.58) 50%,
+      rgba(255,142,18,.22) 66%,
+      transparent 80%
+    );
+  filter:blur(10px);
+  transform:scale(.25);
+}
+
+.chest-stage.opening::before{
+  animation:fullLightCover 3.2s ease-in-out forwards;
+}
+
+@keyframes fullLightCover{
+  0%{
+    opacity:0;
+    transform:scale(.25);
+  }
+
+  28%{
+    opacity:.45;
+    transform:scale(.65);
+  }
+
+  42%{
+    opacity:1;
+    transform:scale(1.35);
+  }
+
+  58%{
+    opacity:1;
+    transform:scale(2.15);
+  }
+
+  72%{
+    opacity:.72;
+    transform:scale(2.35);
+  }
+
+  100%{
+    opacity:0;
+    transform:scale(2.65);
+  }
+}
