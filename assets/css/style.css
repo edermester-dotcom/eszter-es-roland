@@ -613,6 +613,8 @@ body{
   content:"";
   position:absolute;
   inset:-18%;
+  z-index:20;
+  pointer-events:none;
   opacity:0;
   background:
     radial-gradient(
